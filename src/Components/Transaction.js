@@ -21,9 +21,9 @@ function Transaction({ transaction, index }) {
       <td>{transaction.from}</td>
       <td>{transaction.category}</td>
       <td><Link to={`/transactions/${index}`}>Details</Link></td>
-      <td>
+      {/* <td>
         <button onClick={handleDelete}>Delete</button>
-      </td>
+      </td> */}
     </tr>
   );
 }

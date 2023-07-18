@@ -5,25 +5,26 @@ const API = process.env.REACT_APP_API_URL;
 
 function TransactionDetails() {
   const [transaction, setTransaction] = useState(null);
-  let { index } = useParams();
-  let navigate = useNavigate();
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get(`${API}/transactions/${index}`)
+      .get(`${API}/transactions/${id}`)
       .then((response) => {
         setTransaction(response.data);
       })
       .catch(() => {
         navigate("/not-found");
       });
-  }, [index, navigate]);
+  }, [id, navigate]);
 
   const handleDelete = () => {
     axios
-      .delete(`${API}/transactions/${index}`)
+      .delete(`${API}/transactions/${id}`)
       .then(() => {
-        navigate(`/transactions`);
+        //setTransaction(null); // Remove the deleted transaction from the local state
+        navigate(`/transactions`); // Navigate to the transaction list page
       })
       .catch((e) => console.error(e));
   };
@@ -45,14 +46,12 @@ function TransactionDetails() {
           </Link>
         </div>
         <div>
-          <Link to={`/transactions/${index}/edit`}>
+          <Link to={`/transactions/${id}/edit`}>
             <button>Edit</button>
           </Link>
         </div>
         <div>
-          <Link to="#">
-            <button onClick={handleDelete}>Delete</button>
-          </Link>
+          <button onClick={handleDelete}>Delete</button>
         </div>
       </div>
     </article>
